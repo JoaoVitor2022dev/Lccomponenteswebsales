@@ -1,4 +1,6 @@
 using LccomponentesWeb.Data;
+using LccomponentesWeb.Models;
+using LccomponentesWeb.Services;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 
@@ -18,6 +20,9 @@ namespace LccomponentesWeb
 
             builder.Services.AddDbContextPool<LccomponentesWebContext>(options =>
                 options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+
+            // injerção de depedenci apara os serviços   
+            builder.Services.AddScoped<ProductService>();
 
             var app = builder.Build();
 
