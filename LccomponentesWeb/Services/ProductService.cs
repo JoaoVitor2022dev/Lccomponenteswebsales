@@ -17,5 +17,10 @@ namespace LccomponentesWeb.Services
         {
             return await _context.Product.ToListAsync();
         }
+        public async Task InsertAsync(Product obj)
+        {
+            _context.Add(obj);
+            await _context.SaveChangesAsync();
+        }
     }
 }

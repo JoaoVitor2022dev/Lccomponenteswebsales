@@ -23,6 +23,7 @@ namespace LccomponentesWeb
 
             // injerção de depedenci apara os serviços   
             builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<CategoriesService>();
 
             var app = builder.Build();
 
