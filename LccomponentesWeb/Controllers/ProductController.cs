@@ -1,8 +1,8 @@
 ﻿using LccomponentesWeb.Models;
 using LccomponentesWeb.Models.ViewModels;
 using LccomponentesWeb.Services;
+using LccomponentesWeb.Services.Exeptions;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol.Plugins;
 
 namespace LccomponentesWeb.Controllers
 {
@@ -34,6 +34,82 @@ namespace LccomponentesWeb.Controllers
            await _productService.InsertAsync(product);
            return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = await _productService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productService.RemoveAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = await _productService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            List<Category> category = await _categoriesService.FindAllAsync();
+            ProductFormViewModel viewModel = new ProductFormViewModel { Product = obj, Category = category };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Product product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _productService.UpdateAsync(product);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = await _productService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
     }
 }
+

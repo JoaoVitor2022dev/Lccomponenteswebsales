@@ -1,7 +1,7 @@
 ﻿using LccomponentesWeb.Data;
 using LccomponentesWeb.Models;
+using LccomponentesWeb.Services.Exeptions;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Plugins;
 
 namespace LccomponentesWeb.Services
 {
@@ -22,5 +22,38 @@ namespace LccomponentesWeb.Services
             _context.Add(obj);
             await _context.SaveChangesAsync();
         }
+        public async Task<Product> FindByIdAsync(int id)
+        {
+            return await _context.Product.Include(obj => obj.Category).FirstOrDefaultAsync(obj => obj.Id == id);
+        }
+        public async Task RemoveAsync(int id)
+        {
+            var obj = await _context.Product.FindAsync(id);
+
+            if (obj != null)
+            {
+                _context.Product.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task UpdateAsync(Product obj)
+        {
+            if (!await _context.Product.AnyAsync(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id não encontrado.");
+            }
+
+            try
+            {
+                _context.Update(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
+
     }
 }
+

@@ -1,0 +1,36 @@
+﻿@model LccomponentesWeb.Models.Product;
+
+@{
+    ViewData["Title"] = "Detalhes do produto";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <div class="dl-horizontal">
+        <dt>Nome:</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
+         <br/>
+        <dt>Informações do Produto:</dt>
+        <dd>@Html.DisplayFor(model => model.Description)</dd>
+        <br />
+        <dt>Preço:</dt>
+        <dd>R$ @Html.DisplayFor(model => model.Price)</dd>
+        <br />
+        <dt>Quantidade</dt>
+        <dd>@Html.DisplayFor(model => model.Quantity) Unidades</dd>
+        <br />
+        <dt>Categoria de Produto:</dt>
+        <dd>@Html.DisplayFor(model => model.Category.Name)</dd>
+        <br />
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Editar</a>
+</div>
+<br/>
+<div>
+    <a class="btn btn-warning" asp-action="Index">Voltar</a>
+</div>

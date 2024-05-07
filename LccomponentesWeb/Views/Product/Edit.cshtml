@@ -1,55 +1,48 @@
-﻿@model LccomponentesWeb.Models.ViewModels.ProductFormViewModel; 
+﻿@model LccomponentesWeb.Models.ViewModels.ProductFormViewModel;
 
 @{
-    ViewData["Title"] = "Registrar Produto";
+    ViewData["Title"] = "Editar";
 }
 <br />
 <h1 class="text-center">@ViewData["Title"]</h1>
-<br />
+
 <h4>Produto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Product.Id" />
             <div class="form-group">
-                <label class="control-label">Nome:</label>
+                <label class="control-label">Name: </label>
                 <input asp-for="Product.Name" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label class="control-label">Informações do Produto:</label>
+                <label class="control-label">Informações de Produto: </label>
                 <input asp-for="Product.Description" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label class="control-label">Preço:</label>
-                <input asp-for="Product.Price" class="form-control" placeholder="Digite o preço (ex: 10.50)" type="number" step="0.01" inputmode="decimal" />
-                <span asp-validation-for="Product.Price" class="text-danger"></span>
+                <label class="control-label">Name: </label>
+                <input asp-for="Product.Price" class="form-control" />
             </div>
             <br />
             <div class="form-group">
-                <label class="control-label">Quantidade:</label>
+                <label class="control-label">Name: </label>
                 <input asp-for="Product.Quantity" class="form-control" />
             </div>
-            <br/>
+            <br />
             <div class="form-group">
-                <label class="control-label">Categoria de Produto:</label>
+                <label class="control-label">Categoria:</label>
                 <select asp-for="Product.CategoryId" asp-items="@(new SelectList(Model.Category,"Id","Name"))" class="form-control">
                 </select>
             </div>
-            <br />
             <br/>
             <div class="form-group">
-                <input type="submit" value="Registrar" class="btn btn-info" />
+                <input type="submit" value="Salvar" class="btn btn-info" />
             </div>
         </form>
-        <br/>
+        <br />
         <a asp-action="Index" class="btn btn-warning">Voltar</a>
     </div>
 </div>
-
-
-
-
-
-    
