@@ -3,6 +3,7 @@ using LccomponentesWeb.Models.ViewModels;
 using LccomponentesWeb.Services;
 using LccomponentesWeb.Services.Exeptions;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace LccomponentesWeb.Controllers
 {
@@ -38,12 +39,12 @@ namespace LccomponentesWeb.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Fornecido" });
             }
             var obj = await _productService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Encontrado" });
             }
             return View(obj);
         }
@@ -59,12 +60,12 @@ namespace LccomponentesWeb.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Fornecido" });
             }
             var obj = await _productService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Encontrado" });
             }
 
             List<Category> category = await _categoriesService.FindAllAsync();
@@ -79,7 +80,7 @@ namespace LccomponentesWeb.Controllers
         {
             if (id != product.Id)
             {
-                return BadRequest();
+                return RedirectToAction("Error", "Product", new { message = " id não incompatível" });
             }
             try
             {
@@ -88,11 +89,11 @@ namespace LccomponentesWeb.Controllers
             }
             catch (NotFoundException)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Fornecido" });
             }
             catch (DbConcurrencyException)
             {
-                return BadRequest();
+                return RedirectToAction("Error", "Product", new { message = "Id não Encontrado" });
             }
         }
 
@@ -101,14 +102,24 @@ namespace LccomponentesWeb.Controllers
 
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Fornecido" });
             }
             var obj = await _productService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Product", new { message = "Id não Encontrado" });
             }
             return View(obj);
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

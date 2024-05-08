@@ -1,8 +1,10 @@
 using LccomponentesWeb.Data;
 using LccomponentesWeb.Models;
 using LccomponentesWeb.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Globalization;
 
 namespace LccomponentesWeb
 {
@@ -25,7 +27,26 @@ namespace LccomponentesWeb
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<CategoriesService>();
 
+            // Configure localization
+            var supportedCultures = new[]
+             {
+             new CultureInfo("en-US"),
+             new CultureInfo("pt-BR")
+             };
+
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"), // Defina a cultura padrão
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+
+            builder.Services.AddControllersWithViews()
+                .AddViewLocalization(); // Adicione esta linha para habilitar a localização nas visualizações
+
             var app = builder.Build();
+
+            app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
