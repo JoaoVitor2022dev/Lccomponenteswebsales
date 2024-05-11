@@ -79,6 +79,10 @@ namespace LccomponentesWeb.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Client")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 

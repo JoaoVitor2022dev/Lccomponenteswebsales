@@ -3,7 +3,6 @@ using LccomponentesWeb.Models;
 using LccomponentesWeb.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using System.Globalization;
 
 namespace LccomponentesWeb
@@ -26,6 +25,7 @@ namespace LccomponentesWeb
             // injerção de depedenci apara os serviços   
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<CategoriesService>();
+            builder.Services.AddScoped<SalesRecordService>();
 
             // Configure localization
             var supportedCultures = new[]

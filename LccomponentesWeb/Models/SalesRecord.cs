@@ -6,6 +6,7 @@ namespace LccomponentesWeb.Models
     public class SalesRecord
     {
         public int Id { get; set; }
+        public string Client { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]

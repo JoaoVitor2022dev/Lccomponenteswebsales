@@ -62,6 +62,8 @@ namespace LccomponentesWeb.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Client = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),

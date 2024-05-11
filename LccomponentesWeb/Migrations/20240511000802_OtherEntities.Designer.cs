@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LccomponentesWeb.Migrations
 {
     [DbContext(typeof(LccomponentesWebContext))]
-    [Migration("20240501203016_OtherEntities")]
+    [Migration("20240511000802_OtherEntities")]
     partial class OtherEntities
     {
         /// <inheritdoc />
@@ -81,6 +81,10 @@ namespace LccomponentesWeb.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Client")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
