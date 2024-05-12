@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LccomponentesWeb.Migrations
 {
     [DbContext(typeof(LccomponentesWebContext))]
-    [Migration("20240511000802_OtherEntities")]
+    [Migration("20240512151842_OtherEntities")]
     partial class OtherEntities
     {
         /// <inheritdoc />
@@ -92,8 +92,8 @@ namespace LccomponentesWeb.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

@@ -1,0 +1,65 @@
+﻿@model LccomponentesWeb.Models.ViewModels.SalesRecordFormViewModel;
+@using LccomponentesWeb.Models.Enums; 
+
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<h4>Informações das vendas</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SalesRecord.Client" class="control-label">Cliente:</label>
+                <input asp-for="SalesRecord.Client" class="form-control" />
+                <span asp-validation-for="SalesRecord.Client" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="control-label">Preço:</label>
+                <input asp-for="SalesRecord.Price" class="form-control" placeholder="Digite o preço (ex: 10.50)" type="number" step="0.01" inputmode="decimal" />
+                <span asp-validation-for="SalesRecord.Price" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="SalesRecord.Date" class="control-label">Data da venda:</label>
+                <input asp-for="SalesRecord.Date" class="form-control" />
+                <span asp-validation-for="SalesRecord.Date" class="text-danger"></span>
+            </div>
+            <br />
+             <div>
+                <label class="control-label">Produto:</label>
+                <form asp-action="Create" method="get" class="d-flex">
+                 <input class="form-control me-sm-2" type="search" placeholder="Buscar" name="searchTerm">
+                 <button class="btn btn-primary" type="submit">Buscar</button>
+                 </form>
+             </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="SalesRecord.PaymentMethod" class="control-label">Método de Pagamento:</label>
+                <select asp-for="SalesRecord.PaymentMethod" asp-items="Html.GetEnumSelectList<PaymentMethod>()" class="form-control"></select>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Criar venda" class="btn btn-primary" />
+            </div>
+        </form>
+        <div>
+            <br/>
+            <a asp-action="Index" class="btn btn-warning">Voltar</a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
